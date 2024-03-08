@@ -1,6 +1,8 @@
 package com.example.musiclibrary.controllers;
 
 import com.example.musiclibrary.models.Playlist;
+import com.example.musiclibrary.models.PlaylistSong;
+import com.example.musiclibrary.models.Song;
 import com.example.musiclibrary.services.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +21,26 @@ public class PlaylistController {
         return playlistService.getAllPlaylists();
     }
 
+    @GetMapping("/user")
+    public List<String> getPlaylistsByUserId(@RequestHeader Long userId) {
+        return playlistService.getPlaylistsByUserId(userId);
+    }
+
     @GetMapping("/{id}")
     public String getPlaylistById(@PathVariable Long id) {
         return playlistService.getPlaylistById(id);
     }
 
+    @GetMapping("/songs/{id}")
+    public List<PlaylistSong> getPlaylistSongsByPlaylistId(@PathVariable Long id) {
+        return playlistService.getPlaylistSongsByPlaylistId(id);
+    }
+
     @PostMapping
-    public String savePlaylist(@RequestBody String name) {
-        return playlistService.savePlaylist(name);
+    public String savePlaylist(
+            @RequestHeader Long userId,
+            @RequestBody String name) {
+        return playlistService.savePlaylist(name, userId);
     }
 
     @DeleteMapping("/{id}")

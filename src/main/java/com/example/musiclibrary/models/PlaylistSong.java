@@ -13,6 +13,11 @@ public class PlaylistSong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long playlistId;
-    private Long songId;
+
+    @ManyToOne
+    @JoinColumn(name = "playlist_id")
+    private Playlist playlist;
+    @ManyToOne
+    @JoinColumn(name = "song_id")
+    private Song song;
 }
